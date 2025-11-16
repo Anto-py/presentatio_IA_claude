@@ -6,46 +6,32 @@ function initializeCards() {
 
     cards.forEach(card => {
         card.addEventListener('click', () => {
-            const description = card.querySelector('.description');
-            
             if (currentActiveCard && currentActiveCard !== card) {
-                // Fermer la carte précédente
-                currentActiveCard.classList.remove('active');
-                currentActiveCard.querySelector('.description').classList.remove('show');
+                // Retourner la carte précédente
+                currentActiveCard.classList.remove('flipped');
             }
 
             if (currentActiveCard === card) {
-                // Fermer la carte actuelle si elle est déjà ouverte
-                card.classList.remove('active');
-                description.classList.remove('show');
+                // Retourner la carte actuelle si elle est déjà retournée
+                card.classList.remove('flipped');
                 currentActiveCard = null;
                 resetBtn.classList.remove('show');
             } else {
-                // Ouvrir la nouvelle carte
-                card.classList.add('active');
-                description.classList.add('show');
+                // Retourner la nouvelle carte
+                card.classList.add('flipped');
                 currentActiveCard = card;
                 resetBtn.classList.add('show');
-                
-                // Scroll vers la carte active
-                setTimeout(() => {
-                    card.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center' 
-                    });
-                }, 100);
             }
         });
     });
 
     resetBtn.addEventListener('click', () => {
         if (currentActiveCard) {
-            currentActiveCard.classList.remove('active');
-            currentActiveCard.querySelector('.description').classList.remove('show');
+            currentActiveCard.classList.remove('flipped');
             currentActiveCard = null;
         }
         resetBtn.classList.remove('show');
-        
+
         // Scroll vers le haut
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
